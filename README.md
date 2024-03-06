@@ -95,7 +95,25 @@ Conclusiones
 
 Este sistema proporcionará una plataforma eficiente para gestionar la información de los empleados, garantizando la seguridad y la integridad de los datos. Se espera que cumpla con los requisitos establecidos en las historias de usuario y brinde una experiencia fluida tanto para los administradores como para los empleados.
 
-INSTRUCCIONES
+PROCESO DE CONTRUCCION:
+el proyecto lo realice con vite y react 
+para el backend y db use json-server
+
+1. comenzamos analizando que datos necesitamos para la base de datos, los normalizamos y por ulitimo los creamos en el archivo db.json
+2. provamos los endopoints con postman
+3. creamos el estilo grafico de la pagina web con figma
+4. comenzamos creando las rutas y paginas de cada elemento del proyecto
+5. creamos los componentes y la arquitectura de cada pagina
+6. le damos los estilos a cada componente con css
+7. conectamos el proyecto a la base de datos por medio de los endpoints y llamamos a la informacion que necesitamos donde la necesitamos 
+8. probamos las endpoints de POST y PATCH para verificar que los datos se estan agregando a la base de datos
+9. terminamos de probar por cualquier bug que se nos presente
+10. probamos la aplicaccion una ultima vez para verificar que todo este funcionando como se debe y subimos nuestra aplicacion a git
+extra: 
+1. en cada paso que vamos avanzando vamos agregando a git para no perder nuestro progreso
+
+
+INSTRUCCIONES:
 
 entrar a la carpeta estado_vacunacion_empleados y usar el comando "npm install" en la terminal
 
