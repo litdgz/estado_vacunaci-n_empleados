@@ -1,0 +1,69 @@
+{
+  "empleados": [
+    {
+      "cedula": 1714724752,
+      "nombres": "Carlos Nicolas",
+      "apellidos": "Dominguez Rodriguez",
+      "email": "litdgz@gmail.com",
+      "usuario": "cdominguez593",
+      "contrasena": "1234567890",
+      "role": "administrador",
+      "fecha_nacimiento": "2023-12-07",
+      "direccion_domicilio": "Floreana Y Matazarno",
+      "telefono_movil": "0957581454",
+      "estado_vacunacion": "vacunado",
+      "id": 1
+    },
+    {
+      "cedula": 1823158263,
+      "nombres": "Juan Sebastian",
+      "apellidos": "Rodriguez Lara",
+      "email": "juanrodri@hotmail.com",
+      "usuario": "jrodriguez12",
+      "contrasena": "1234567890",
+      "role": "empleado",
+      "fecha_nacimiento": "2024-03-08",
+      "direccion_domicilio": "quito",
+      "telefono_movil": 979771620,
+      "estado_vacunacion": "vacunado",
+      "id": 2
+    },
+    {
+      "id": 3,
+      "cedula": "7126416822",
+      "nombres": "Gonzalo Lee",
+      "apellidos": "Rodriguez Salas",
+      "email": "grodriguez@hotmail.com",
+      "usuario": "grodriguez298",
+      "contrasena": "1234567890",
+      "role": "empleado",
+      "fecha_nacimiento": "1999-06-17",
+      "direccion_domicilio": "Floreana Y Matazarno",
+      "telefono_movil": "0955802476",
+      "estado_vacunacion": "vacunado"
+    }
+  ],
+  "vacunas": [
+    {
+      "id": 1,
+      "empleadoId": 1,
+      "tipo_vacuna": "Jhonson&Jhonson",
+      "fecha_vacunacion": "2024-04-05",
+      "numero_de_dosis": "3"
+    },
+    {
+      "id": 2,
+      "empleadoId": 2,
+      "tipo_vacuna": "Pfizer",
+      "fecha_vacunacion": "2024-03-21",
+      "numero_de_dosis": "3"
+    },
+    {
+      "id": 3,
+      "empleadoId": 3,
+      "tipo_vacuna": "Sputnik",
+      "fecha_vacunacion": "2024-03-21",
+      "numero_de_dosis": "3"
+    }
+  ]
+}
