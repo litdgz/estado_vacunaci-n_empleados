@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 import EmpleadoCard from "../components/EmpleadoCard";
@@ -7,6 +7,7 @@ function ListaEmpleados() {
   const [userSession, setUserSession] = useState(() => {
     return JSON.parse(localStorage.getItem("user"));
   });
+
   const navigate = useNavigate();
 
   if (userSession === null) {
@@ -20,6 +21,15 @@ function ListaEmpleados() {
 
   const [idVacunados, setIdVacunados] = useState([]);
   console.log("empleados: ", empleados);
+
+  const [filtroFecha, setFiltroFecha] = useState({
+    fecha_de: "",
+    fecha_hasta: "",
+    empleadosFiltrados: [],
+  });
+
+  const inputFechaDe = useRef();
+  const inputFechaHasta = useRef();
 
   useEffect(() => {
     fetch("http://localhost:3000/empleados?_embed=vacunas")
@@ -46,6 +56,10 @@ function ListaEmpleados() {
     }
   }, [idVacunados]);
 
+  useEffect(() => {
+    getFiltroFecha();
+  }, [filtroFecha.fecha_hasta, filtroFecha.fecha_de]);
+
   function filtrarPorEstadoVacunacion(estado) {
     fetch(`http://localhost:3000/empleados?estado_vacunacion=${estado}`)
       .then((response) => response.json())
@@ -68,6 +82,49 @@ function ListaEmpleados() {
       .catch((error) => console.error(error));
   }
 
+  function getFiltroFecha() {
+    console.log("empleados filtro fecha", empleados);
+    if (
+      empleados.length > 0 &&
+      filtroFecha.fecha_de !== "" &&
+      filtroFecha.fecha_hasta !== ""
+    ) {
+      let empleadosFiltrados = [...empleados];
+      console.log("corrio filtro fecha");
+
+      empleadosFiltrados = empleadosFiltrados?.filter((empleado) => {
+        const fecha = new Date(empleado.vacunas[0].fecha_vacunacion);
+
+        return (
+          fecha.getTime() >= new Date(filtroFecha.fecha_de).getTime() &&
+          fecha.getTime() <= new Date(filtroFecha.fecha_hasta).getTime()
+        );
+      });
+
+      setFiltroFecha({ ...filtroFecha, empleadosFiltrados });
+    }
+  }
+
+  function hanfleOnChangeFecha(e) {
+    const { name, value } = e.target;
+
+    //agregamos los cambios a nuestro estado empleado
+    setFiltroFecha({
+      ...filtroFecha,
+      [name]: value,
+    });
+  }
+
+  function resetFecha() {
+    setFiltroFecha({
+      fecha_de: "",
+      fecha_hasta: "",
+      empleadosFiltrados: [],
+    });
+    inputFechaDe.current.value = "";
+    inputFechaHasta.current.value = "";
+  }
+
   function filtarPorFechaVacuna(orden) {
     setIdVacunados([]);
     fetch(
@@ -82,8 +139,6 @@ function ListaEmpleados() {
       })
       .catch((error) => console.error(error));
   }
-
-  console.log("idVacunados: ", idVacunados);
 
   function handleEmpleadoDelete(id) {
     const empleados2 = empleados.filter((empleado) => empleado.id !== id);
@@ -147,9 +202,40 @@ function ListaEmpleados() {
             Por fecha descendente
           </button>
         </div>
+        <div>
+          <label htmlFor="fecha_de">De</label>
+          <input
+            type="date"
+            name="fecha_de"
+            id="fecha_de"
+            ref={inputFechaDe}
+            onChange={hanfleOnChangeFecha}
+          />
+        </div>
+        <div>
+          <label htmlFor="fecha_hasta">Hasta</label>
+          <input
+            type="date"
+            name="fecha_hasta"
+            id="fecha_hasta"
+            ref={inputFechaHasta}
+            onChange={hanfleOnChangeFecha}
+          />
+          <button onClick={() => resetFecha()}>resetear fecha</button>
+        </div>
       </div>
       {empleados.length > 0 &&
+        filtroFecha.empleadosFiltrados.length === 0 &&
         empleados.map((empleado) => (
+          <EmpleadoCard
+            empleado={empleado}
+            onEmpleadoDelete={handleEmpleadoDelete}
+            key={empleado.id}
+          />
+        ))}
+      {empleados.length > 0 &&
+        filtroFecha.empleadosFiltrados.length > 0 &&
+        filtroFecha.empleadosFiltrados.map((empleado) => (
           <EmpleadoCard
             empleado={empleado}
             onEmpleadoDelete={handleEmpleadoDelete}
